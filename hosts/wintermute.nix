@@ -1,10 +1,7 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
+# Grab the hardware conf. Change this to hostname specific later.
   imports =
     [ # Include the results of the hardware scan.
       ../local/hardware-configuration.nix
@@ -24,6 +21,8 @@
     extraModprobeConfig = "options vfio-pci ids=1002:687f,1002:aaf8";
   };
 
+
+# Disabled temporarily to clear conflict. Also, probably outdated.
   # The following pins the Kernel version and applies a ACS override patch allowing IOMMU groups to be seperated far more granularly
 #  boot.kernelPackages = pkgs.linuxPackages_4_19;
 #  nixpkgs.config.packageOverrides = pkgs: {
@@ -38,76 +37,74 @@
 #        ];
 #      };
 #    };
-
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.  networking.useDHCP = false;
-  networking.interfaces.enp42s0.useDHCP = false;
-  networking.interfaces.wlp39s0.useDHCP = false;
   
-  # Add netowrking configuration
-  networking.hostName = "wintermute";
+  # Networking configuration.
+  networking.hostName = "wintermute"; # Lame but il think of something better later
   networking.interfaces.enp42s0.ipv4.addresses = [ {
     address = "192.168.1.50";
     prefixLength = 24;
   } ];
   networking.defaultGateway = "192.168.1.1";
+  # Use PFSense as initial DNS resolution, then use CF and Google last
   networking.nameservers = [ "192.168.1.1" "1.1.1.1" "1.1.1.0" "8.8.8.8" ];
-  # Set your time zone.
-  time.timeZone = "America/Los_Angeles";
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  
+  # Packages to install, should trim later
   environment.systemPackages = with pkgs; [
     wget vim gzip unzip pciutils firefox cura git virt-manager 
   ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    forwardX11 = true;
-  };
 
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
   # Enable the X11 windowing system.
-  services.xserver = {
-    enable = true;
-    layout = "us";
-    
-    
-    # Enable i3 as the window manager
-    windowManager.i3 = {
+
+  # Enable/Configure basic utilities
+  programs = {
+    fish.enable = true;
+    tmux.enable = true;
+    gnupg.agent = {
       enable = true;
-      extraPackages = with pkgs; [
-        dmenu #application launcher most people use
-        i3status # gives you the default i3 status bar
-        i3lock #default i3 screen locker
-     ];
+      enableSShSupport = true;
+      pinentryFlavor = "qt"; # Change to emacs later to test
+
+ # Enable Services
+  services = {
+    emacs = {
+      enable = true;
+      defaultEditor = true;
+      };
+    openssh = {
+      enable = true;
+      forwardX11 = true;
+    };
+    urxvtd.enable = true;
+    xserver = {
+      enable = true;
+      layout = "us";
+        
+      # Enable i3 as the window manager
+      windowManager.i3 = {
+        enable = true;
+        extraPackages = with pkgs; [
+          dmenu #application launcher most people use
+          i3status # gives you the default i3 status bar
+          i3lock #default i3 screen locker
+       ];
+      };
     };
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account.
   users.users.caleb = {
     isNormalUser = true;
     home = "/home/caleb";
     description = "Caleb Schmucker";
     shell = pkgs.fish;
     extraGroups = [ "wheel" "libvirtd" ]; # Enable ‘sudo’ for the user.
-    initialPassword = "";
+    initialPassword = ""; # Should be given a real password ASAP
   };
-  
+
   # Virtualization configuration.
   virtualisation = {
     libvirtd = {
@@ -115,33 +112,8 @@
       qemuOvmf = true;
     };
   };
-
-  # Enable/Configure Fish
-  programs.fish.enable = true;
   
-  # Enable/Configure EMACS
-  services.emacs = {
-    enable = true;
-    defaultEditor = true;
-  };
-
-  # Enable/Configure TMUX
-  programs.tmux.enable = true;
- 
-  # Enable/Configure urxvtd
-  services.urxvtd.enable = true;
-
-  # Enable GPG
-  programs.gnupg.agent.enable = true;
-  programs.gnupg.agent = {
-    enableSSHSupport = true;
-    pinentryFlavor = "qt";
-  };
-
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
+  # You should change this only after NixOS release notes say you should.
   system.stateVersion = "19.09"; # Did you read the comment?
 
 }
