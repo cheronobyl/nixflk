@@ -51,7 +51,7 @@
   
   # Packages to install, should trim later
   environment.systemPackages = with pkgs; [
-    wget vim gzip unzip pciutils firefox cura git virt-manager 
+    wget vim gzip unzip pciutils firefox cura direnv git virt-manager 
   ];
 
   # Enable sound.
