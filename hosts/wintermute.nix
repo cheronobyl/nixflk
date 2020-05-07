@@ -25,19 +25,19 @@
   };
 
   # The following pins the Kernel version and applies a ACS override patch allowing IOMMU groups to be seperated far more granularly
-  boot.kernelPackages = pkgs.linuxPackages_4_19;
-  nixpkgs.config.packageOverrides = pkgs: {
-      linux_4_17 = pkgs.linux_4_19.override {
-        kernelPatches = pkgs.linux_4_19.kernelPatches ++ [
-          { name = "acs";
-            patch = pkgs.fetchurl {
-              url = "https://aur.archlinux.org/cgit/aur.git/plain/add-acs-overrides.patch?h=linux-vfio";
-              sha256 = "5517df72ddb44f873670c75d89544461473274b2636e2299de93eb829510ea50";
-            };
-          }
-        ];
-      };
-    };
+#  boot.kernelPackages = pkgs.linuxPackages_4_19;
+#  nixpkgs.config.packageOverrides = pkgs: {
+#      linux_4_17 = pkgs.linux_4_19.override {
+#        kernelPatches = pkgs.linux_4_19.kernelPatches ++ [
+#          { name = "acs";
+#            patch = pkgs.fetchurl {
+#              url = "https://aur.archlinux.org/cgit/aur.git/plain/add-acs-overrides.patch?h=linux-vfio";
+#              sha256 = "5517df72ddb44f873670c75d89544461473274b2636e2299de93eb829510ea50";
+#            };
+#          }
+#        ];
+#      };
+#    };
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -105,6 +105,7 @@
     description = "Caleb Schmucker";
     shell = pkgs.fish;
     extraGroups = [ "wheel" "libvirtd" ]; # Enable ‘sudo’ for the user.
+    initialPassword = "";
   };
   
   # Virtualization configuration.
