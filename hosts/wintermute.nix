@@ -63,7 +63,7 @@
     tmux.enable = true;
     gnupg.agent = {
       enable = true;
-      enableSShSupport = true;
+      enableSSHSupport = true;
       pinentryFlavor = "qt"; # Change to emacs later to test
     };
   };
