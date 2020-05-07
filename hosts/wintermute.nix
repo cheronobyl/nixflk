@@ -39,14 +39,15 @@
 #    };
   
   # Networking configuration.
-  networking.hostName = "wintermute"; # Lame but il think of something better later
-  networking.interfaces.enp42s0.ipv4.addresses = [ {
-    address = "192.168.1.50";
-    prefixLength = 24;
-  } ];
-  networking.defaultGateway = "192.168.1.1";
-  # Use PFSense as initial DNS resolution, then use CF and Google last
-  networking.nameservers = [ "192.168.1.1" "1.1.1.1" "1.1.1.0" "8.8.8.8" ];
+  networking = {
+    hostName = "wintermute"; # Lame but il think of something better later
+    interfaces.enp42s0.ipv4.addresses = [ {
+      address = "192.168.1.50";
+      prefixLength = 24;
+    } ];
+    defaultGateway = "192.168.1.1";
+    nameservers = [ "192.168.1.1" "1.1.1.1" "1.1.1.0" "8.8.8.8" ]; # Use PFSense as initial DNS resolution, then use CF and Google last
+  };
   
   # Packages to install, should trim later
   environment.systemPackages = with pkgs; [
