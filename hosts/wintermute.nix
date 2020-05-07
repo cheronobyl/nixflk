@@ -57,8 +57,6 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  # Enable the X11 windowing system.
-
   # Enable/Configure basic utilities
   programs = {
     fish.enable = true;
@@ -67,7 +65,8 @@
       enable = true;
       enableSShSupport = true;
       pinentryFlavor = "qt"; # Change to emacs later to test
-
+    };
+  };
  # Enable Services
   services = {
     emacs = {
@@ -79,7 +78,7 @@
       forwardX11 = true;
     };
     urxvtd.enable = true;
-    xserver = {
+    xserver = { # Setup x11
       enable = true;
       layout = "us";
         
