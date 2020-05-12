@@ -8,6 +8,7 @@
       ../users/caleb
       ../users/root
       ../profiles/graphical
+      ../profiles/virt
     ];
   
   # Configure boot options
@@ -54,7 +55,7 @@
   
   # Packages to install, should trim later
   environment.systemPackages = with pkgs; [
-    wget vim gzip unzip pciutils cura direnv git virt-manager 
+    wget vim gzip unzip pciutils cura direnv git 
   ];
 
 
