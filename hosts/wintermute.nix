@@ -7,6 +7,7 @@
       ../local/hardware-configuration.nix
       ../users/caleb
       ../users/root
+      ../profiles/graphical
     ];
   
   # Configure boot options
@@ -78,30 +79,8 @@
       };
     openssh = {
       enable = true;
-      forwardX11 = true;
     };
     urxvtd.enable = true;
-    xserver = { # Setup x11
-      enable = true;
-      layout = "us";
-        
-      # Enable i3 as the window manager
-      windowManager.i3 = {
-        enable = true;
-        extraPackages = with pkgs; [
-          dmenu #application launcher most people use
-          i3status # gives you the default i3 status bar
-          i3lock #default i3 screen locker
-       ];
-      };
-    };
-  };
-# Virtualization configuration.
-  virtualisation = {
-    libvirtd = {
-      enable = true;
-      qemuOvmf = true;
-    };
   };
   
   # You should change this only after NixOS release notes say you should.
