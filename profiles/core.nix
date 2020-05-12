@@ -53,6 +53,8 @@ in {
 
         # git
         g = "git";
+	gad = "git add";
+	gada = "git add -A";
 	gus = "git status";
 	geck = "git checkout";
 	geckn = "git checkout -b";
@@ -93,6 +95,24 @@ in {
 	
       };
 
+  };
+
+  # Enable/Configure basic utilities
+  programs = {
+    fish.enable = true;
+    tmux.enable = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+      pinentryFlavor = "qt"; # Change to emacs later to test
+    };
+  };
+
+  # Enable Services
+  services = {
+    openssh = {
+      enable = true;
+    };
   };
 
   fonts = {
