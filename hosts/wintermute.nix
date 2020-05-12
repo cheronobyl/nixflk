@@ -54,12 +54,9 @@
   
   # Packages to install, should trim later
   environment.systemPackages = with pkgs; [
-    wget vim gzip unzip pciutils firefox cura direnv git virt-manager 
+    wget vim gzip unzip pciutils cura direnv git virt-manager 
   ];
 
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
 
   # Enable/Configure basic utilities
   programs = {
@@ -73,14 +70,9 @@
   };
  # Enable Services
   services = {
-    emacs = {
-      enable = true;
-      defaultEditor = true;
-      };
     openssh = {
       enable = true;
     };
-    urxvtd.enable = true;
   };
   
   # You should change this only after NixOS release notes say you should.
