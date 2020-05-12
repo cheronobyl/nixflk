@@ -5,6 +5,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ../local/hardware-configuration.nix
+      ../users/caleb
+      ../users/root
     ];
   
   # Configure boot options
@@ -94,18 +96,7 @@
       };
     };
   };
-
-  # Define a user account.
-  users.users.caleb = {
-    isNormalUser = true;
-    home = "/home/caleb";
-    description = "Caleb Schmucker";
-    shell = pkgs.fish;
-    extraGroups = [ "wheel" "libvirtd" ]; # Enable ‘sudo’ for the user.
-    initialPassword = ""; # Should be given a real password ASAP
-  };
-
-  # Virtualization configuration.
+# Virtualization configuration.
   virtualisation = {
     libvirtd = {
       enable = true;
