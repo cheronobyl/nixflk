@@ -24,18 +24,22 @@ in {
       binutils
       coreutils
       curl
+      direnv
       dosfstools
       dnsutils
       fd
       git
       gotop
       gptfdisk
+      gzip
       iputils
       manpages
       moreutils
       ripgrep
       stdmanpages
       utillinux
+      vim
+      wget
     ];
 
     shellAliases =
@@ -49,13 +53,15 @@ in {
 
         # git
         g = "git";
-
+	gus = "git status";
+	geck = "git checkout";
+	geckn = "git checkout -b";
+	gush = "git push";
+	gim = "git commit -m";
+	
         # grep
         grep = "rg";
         gi = "grep -i";
-
-        # internet ip
-        myip = "dig +short myip.opendns.com @208.67.222.222 2>&1";
 
         # nix
         n = "nix";
@@ -83,6 +89,8 @@ in {
         dn = ifSudo "s systemctl stop";
         jtl = "journalctl";
 
+	# misc
+	
       };
 
   };

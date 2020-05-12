@@ -55,7 +55,7 @@
   
   # Packages to install, should trim later
   environment.systemPackages = with pkgs; [
-    wget vim gzip unzip pciutils cura direnv git 
+    unzip pciutils cura 
   ];
 
 
